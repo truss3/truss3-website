@@ -1,26 +1,20 @@
 ---
-const base = import.meta.env.BASE_URL;
+import Logo from './Logo.astro';
+import { SITE } from '../config/site';
 
-const navItems = [
-  { href: '#features', label: '能力' },
-  { href: '#workflow', label: '流程' },
-  { href: '#about', label: '关于' },
-  { href: '#contact', label: '联系' },
-] as const;
+const base = import.meta.env.BASE_URL;
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={base} aria-label="Truss3 首页">
-      <span class="brand-mark" aria-hidden="true">
-        T3
-      </span>
-      <span class="brand-name">Truss3</span>
+    <a class="brand" href={base} aria-label={`${SITE.name} 首页`}>
+      <Logo />
+      <span class="brand-name">{SITE.name}</span>
     </a>
 
     <nav class="site-nav" aria-label="主导航">
       <ul>
-        {navItems.map((item) => (
+        {SITE.nav.map((item) => (
           <li>
             <a href={item.href}>{item.label}</a>
           </li>

@@ -1,6 +1,8 @@
 # truss3-website
 
-Truss3 官方站点仓库，采用 pnpm workspaces + Turborepo 管理的 monorepo 结构。
+「遍知评论助手」官方网站仓库，采用 pnpm workspaces + Turborepo 管理的 monorepo 结构。
+
+线上地址：<https://www.weweknow.com>
 
 ## 环境要求
 
@@ -35,6 +37,7 @@ pnpm dev
 │       ├── public/                # 原样拷贝的静态资源
 │       └── src/
 │           ├── components/        # 可复用 UI 组件
+│           ├── config/            # 站点级元数据（品牌名/联系方式/备案）
 │           ├── layouts/           # 页面骨架（含全局 SEO meta）
 │           ├── pages/             # 文件路由，文件路径即 URL
 │           └── styles/            # 全局样式与设计变量
@@ -67,6 +70,23 @@ pnpm dev
 pnpm --filter @truss3/conversation-web dev
 pnpm --filter @truss3/conversation-web build
 ```
+
+## 维护站点内容
+
+站点文案与业务信息集中在 `apps/conversation-web/src/config/site.ts`，改这一个文件即可：
+
+| 字段          | 用途                                  |
+| ------------- | ------------------------------------- |
+| `name`        | 产品名，用于浏览器标题、页头、OG 卡片 |
+| `company`     | 备案主体公司全称，展示在页脚          |
+| `description` | 默认 meta description                 |
+| `icp`         | 备案号与工信部查询地址                |
+| `contact`     | 对外电话与邮箱                        |
+| `nav`         | 页头与页脚导航锚点                    |
+
+页面正文在 `src/pages/index.astro`，各区块文案以数组形式就近定义（`features`、`steps`），改文案不需要理解组件结构。
+
+Logo 为手写 SVG，见 `src/components/Logo.astro`（页头/页脚）与 `public/favicon.svg`（浏览器图标），两处图形需保持一致。
 
 ## 工程规范
 
@@ -102,9 +122,9 @@ pnpm --filter @truss3/conversation-web build
 
 **Settings → Secrets and variables → Actions → Variables** 新建一个变量：
 
-| Name            | Value        |
-| --------------- | ------------ |
-| `CUSTOM_DOMAIN` | `truss3.com` |
+| Name            | Value              |
+| --------------- | ------------------ |
+| `CUSTOM_DOMAIN` | `www.weweknow.com` |
 
 只填域名，**不要带 `https://` 或结尾斜杠**。
 
@@ -116,7 +136,10 @@ pnpm --filter @truss3/conversation-web build
 
 在你的域名服务商（Cloudflare / 阿里云 / GoDaddy 等）处添加记录。
 
-#### 情况 A：根域名（`truss3.com`）
+> 本项目当前采用**情况 B：`www` 子域名**（`www.weweknow.com`）。
+> 根域名 `weweknow.com` 尚未配置解析，因此直接输入根域名无法访问——如需支持，按情况 A 补上 `A` 记录，GitHub 会自动建立与 `www` 之间的跳转。
+
+#### 情况 A：根域名（`weweknow.com`）
 
 添加 **4 条 `A` 记录**，主机记录填 `@`：
 
@@ -138,7 +161,7 @@ pnpm --filter @truss3/conversation-web build
 
 > 官方建议即使配置了 IPv6，也保留 `A` 记录，因为 IPv6 普及度仍不均衡。
 
-#### 情况 B：子域名（`www.truss3.com`）
+#### 情况 B：子域名（`www.weweknow.com`，本项目采用）
 
 添加 **1 条 `CNAME` 记录**：
 

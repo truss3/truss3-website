@@ -203,17 +203,10 @@ svg {
   color: var(--text);
 }
 
-.brand-mark {
-  display: inline-grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: var(--brand);
-  color: var(--brand-contrast);
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.02em;
+/* Logo 组件自带圆角底色，此处只负责尺寸与禁止压缩 */
+.logo-mark {
+  display: block;
+  flex: none;
 }
 
 .site-nav ul {
@@ -430,9 +423,8 @@ svg {
   gap: 28px;
 }
 
-.footer-brand p {
+.footer-company {
   margin-top: 14px;
-  max-width: 320px;
   color: var(--text-muted);
   font-size: 15px;
 }
@@ -452,11 +444,50 @@ svg {
   color: var(--text);
 }
 
-.copyright {
+.footer-meta {
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid var(--border);
+}
+
+.footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.footer-contact a {
+  color: var(--text);
+}
+
+.footer-label {
   color: var(--text-muted);
   font-size: 14px;
+}
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.footer-legal a {
+  color: var(--text-muted);
+}
+
+.footer-legal a:hover {
+  color: var(--text);
 }
 
 @media (min-width: 860px) {
@@ -467,9 +498,5 @@ svg {
 
   .footer-nav {
     justify-self: end;
-  }
-
-  .copyright {
-    grid-column: 1 / -1;
   }
 }

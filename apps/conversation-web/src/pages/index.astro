@@ -2,67 +2,64 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
 
 const features = [
   {
-    title: '统一的信息入口',
-    body: '把分散在多个渠道的对话收敛到一处，团队成员不必反复确认上下文。',
+    title: '评论列表集中查阅',
+    body: '汇总已发布视频下的评论，在后台按视频逐一查看，一眼看清哪些观众提问还没有回应。',
   },
   {
-    title: '可追溯的决策',
-    body: '每条结论都能回溯到原始讨论，减少"当时为什么这么定"的反复拉扯。',
+    title: '以账号主人身份回复',
+    body: '直接在后台回复评论，观众收到的就是来自账号主人的回应，无需切换到手机端操作。',
   },
   {
-    title: '面向交付的协作',
-    body: '从讨论直接落到任务与产出，让沟通结果真正进入交付流程。',
-  },
-  {
-    title: '开箱即用的接入',
-    body: '标准协议与开放接口，既有系统无需大改即可接入。',
+    title: '后台统一处理',
+    body: '查阅与回复都在同一个后台完成，不必在多个应用之间来回切换，减少遗漏。',
   },
 ] as const;
 
 const steps = [
-  { step: '01', title: '接入', body: '对接现有渠道与系统，历史数据可选同步。' },
-  { step: '02', title: '沉淀', body: '对话自动结构化，形成可检索的知识资产。' },
-  { step: '03', title: '交付', body: '结论直接转成任务，闭环到实际产出。' },
+  { step: '01', title: '打开后台', body: '进入评论区，查看全部已发布视频的评论列表。' },
+  { step: '02', title: '定位提问', body: '筛出需要回应的观众提问，跳过无需处理的内容。' },
+  { step: '03', title: '完成回复', body: '以账号主人身份直接回复，闭环一次观众互动。' },
 ] as const;
 ---
 
-<Layout title="Truss3" description="Truss3 官方站点：让团队对话沉淀为可复用的知识资产。">
+<Layout>
   <Header />
 
   <main id="main">
     <!-- Hero -->
     <section class="hero">
       <div class="container hero-inner">
-        <p class="eyebrow">Conversation Platform</p>
+        <p class="eyebrow">视频评论管理</p>
         <h1>
-          让团队对话
+          让每一条观众评论
           <br />
-          沉淀为可复用的资产
+          都得到及时回应
         </h1>
         <p class="hero-lead">
-          Truss3
-          把散落在各个渠道的讨论整理成结构化的知识，让每一次沟通都成为团队可检索、可追溯、可复用的积累。
+          {SITE.name}
+          面向账号运营人员，把已发布视频下的评论集中到后台，统一查阅、以账号主人身份直接回复。不必再逐个视频翻找遗漏的提问。
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#contact">
-            预约演示
+            联系我们
           </a>
           <a class="btn btn-ghost" href="#features">
-            了解能力
+            了解功能
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Features -->
+    <!-- 核心功能 -->
     <section id="features" class="section">
       <div class="container">
         <header class="section-head">
-          <h2>核心能力</h2>
-          <p>围绕"对话"这一最原始的协作方式，解决信息流失与重复沟通的问题。</p>
+          <h2>核心功能</h2>
+          <p>围绕账号运营人员最日常的一件事：把评论看到，并回复掉。</p>
         </header>
 
         <ul class="grid">
@@ -76,12 +73,14 @@ const steps = [
       </div>
     </section>
 
-    <!-- Workflow -->
-    <section id="workflow" class="section section-alt">
+    <!-- 使用场景 -->
+    <section id="scenario" class="section section-alt">
       <div class="container">
         <header class="section-head">
-          <h2>三步落地</h2>
-          <p>不需要重构现有流程，从接入到产生价值只隔一次配置。</p>
+          <h2>使用场景</h2>
+          <p>
+            适合需要长期维护账号互动的运营人员：每天固定时间打开后台，把已发布视频的评论过一遍，及时回应观众提问。
+          </p>
         </header>
 
         <ol class="steps">
@@ -98,42 +97,47 @@ const steps = [
       </div>
     </section>
 
-    <!-- About -->
+    <!-- 关于 -->
     <section id="about" class="section">
       <div class="container narrow">
         <header class="section-head">
           <h2>关于我们</h2>
         </header>
         <p>
-          Truss3
-          是一支专注协作效率的工程团队。我们相信，团队真正的瓶颈往往不是能力，而是信息在传递过程中的损耗。
+          {SITE.name}由{SITE.company}
+          开发与运营。我们把工具做在运营人员真正花时间的地方——不是发布，而是发布之后的互动维护。
         </p>
         <p>
-          因此我们把精力放在最基础的问题上：如何让一次对话产生的结论，被完整、准确地保留下来，并在需要的时候立刻找到。
+          账号的信任来自持续的回应。当观众提出问题却迟迟没有回音，流失的不只是一条评论，而是下一次互动的意愿。
+          我们希望把"逐条看见并回复"这件事变得足够省力，让它能够长期坚持下去。
         </p>
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- 联系 -->
     <section id="contact" class="section section-alt">
       <div class="container narrow contact">
         <header class="section-head">
           <h2>联系我们</h2>
-          <p>无论是产品咨询还是合作意向，我们都会在一个工作日内回复。</p>
+          <p>产品咨询、开通使用或合作意向，欢迎通过以下方式联系我们。</p>
         </header>
 
         <ul class="contact-list">
           <li>
-            <span class="contact-label">邮箱</span>
-            <a href="mailto:hello@example.com">hello@example.com</a>
+            <span class="contact-label">电话</span>
+            <a href={`tel:${SITE.contact.phone}`}>{SITE.contact.phone}</a>
           </li>
           <li>
-            <span class="contact-label">商务合作</span>
-            <a href="mailto:bd@example.com">bd@example.com</a>
+            <span class="contact-label">邮箱</span>
+            <a href={`mailto:${SITE.contact.email}`}>{SITE.contact.email}</a>
+          </li>
+          <li>
+            <span class="contact-label">公司</span>
+            <span>{SITE.company}</span>
           </li>
         </ul>
 
-        <a class="btn btn-primary" href="mailto:hello@example.com">
+        <a class="btn btn-primary" href={`mailto:${SITE.contact.email}`}>
           发送邮件
         </a>
       </div>

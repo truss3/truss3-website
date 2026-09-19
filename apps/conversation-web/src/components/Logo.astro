@@ -1,0 +1,44 @@
+---
+import { SITE } from '../config/site';
+
+interface Props {
+  /** 图标边长（像素），默认 30 */
+  size?: number;
+}
+
+const { size = 30 } = Astro.props;
+---
+
+{/*
+  标识设计说明：
+  蓝色圆角方块 + 白色对话气泡 + 对勾。
+  气泡代表"评论/对话"，对勾代表"已回应"，合起来即产品核心动作——
+  把观众的评论看到并回复掉。对勾在 32px 尺寸下仍可辨识。
+
+  使用纯色而非渐变：Header 与 Footer 会同时渲染本组件，
+  渐变需要 <defs> 中的 id，重复出现在同一文档会造成 id 冲突。
+*/}
+<svg
+  class="logo-mark"
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label={SITE.name}
+>
+  <rect width="64" height="64" rx="15" fill="#2563eb" />
+  <path
+    d="M16 18h32a6 6 0 0 1 6 6v14a6 6 0 0 1-6 6H28l-9 8v-8h-3a6 6 0 0 1-6-6V24a6 6 0 0 1 6-6Z"
+    fill="#ffffff"
+  />
+  {/* 对勾加粗至 6.5：16px 图标尺寸下仍可辨识 */}
+  <path
+    d="M24 31.5 29.5 37 40 26"
+    fill="none"
+    stroke="#2563eb"
+    stroke-width="6.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
