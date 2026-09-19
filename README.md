@@ -86,20 +86,105 @@ pnpm --filter @truss3/conversation-web build
 | `SITE_URL`  | `http://localhost:4321` | 用于生成 canonical、sitemap、OG 的绝对 URL    |
 | `BASE_PATH` | `/`                     | 站点部署在子路径时使用，如 `/truss3-website/` |
 
-## 部署
+`robots.txt` 与 sitemap 均由 `SITE_URL` 动态生成，绑定自定义域名后无需手改任何文件。
 
-推送到 `main` 分支后，`.github/workflows/deploy-pages.yml` 会自动构建并发布到 GitHub Pages。
+## 部署到 GitHub Pages
 
-首次启用需要在仓库完成两项设置：
+推送到 `main` 分支后，`.github/workflows/deploy-pages.yml` 会自动构建并发布。
 
-1. **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
-2. 如需自定义域名，在 **Settings → Pages → Custom domain** 填入域名，并按提示配置 DNS：
-   - 根域名：添加 `A` 记录指向 GitHub Pages 的 IP
-   - 子域名（如 `www`）：添加 `CNAME` 记录指向 `<org>.github.io`
+### 步骤 1：开启 Pages
 
-绑定自定义域名后，工作流中的 `actions/configure-pages` 会自动推导出正确的站点地址与 base 路径，无需修改代码。若还希望每次部署显式保留 `CNAME` 文件，可在 **Settings → Secrets and variables → Actions → Variables** 中新增名为 `CUSTOM_DOMAIN` 的变量，值为你的域名。
+**Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**。
 
-同时请更新 `apps/conversation-web/public/robots.txt` 中的 sitemap 地址为正式域名。
+这一步是必须的：仓库默认未开启 Pages，未开启时 `deploy-pages` 步骤会直接失败。
+
+### 步骤 2：告诉仓库你的域名
+
+**Settings → Secrets and variables → Actions → Variables** 新建一个变量：
+
+| Name            | Value        |
+| --------------- | ------------ |
+| `CUSTOM_DOMAIN` | `truss3.com` |
+
+只填域名，**不要带 `https://` 或结尾斜杠**。
+
+设置后，工作流会据此推导 `SITE_URL`（`https://<domain>`）与 `BASE_PATH`（`/`），并在产物中写入 `CNAME` 文件。这样即使首次部署时 Pages 设置里还没有域名，生成的 canonical / sitemap 也是正确的。
+
+> 若暂时不绑域名，可跳过此步，站点会以 `https://<org>.github.io/<repo>/` 的形式可访问。
+
+### 步骤 3：配置 DNS 解析
+
+在你的域名服务商（Cloudflare / 阿里云 / GoDaddy 等）处添加记录。
+
+#### 情况 A：根域名（`truss3.com`）
+
+添加 **4 条 `A` 记录**，主机记录填 `@`：
+
+| 类型 | 主机记录 | 记录值            |
+| ---- | -------- | ----------------- |
+| A    | `@`      | `185.199.108.153` |
+| A    | `@`      | `185.199.109.153` |
+| A    | `@`      | `185.199.110.153` |
+| A    | `@`      | `185.199.111.153` |
+
+可选再添加 4 条 `AAAA` 记录（IPv6）：
+
+| 类型 | 主机记录 | 记录值                |
+| ---- | -------- | --------------------- |
+| AAAA | `@`      | `2606:50c0:8000::153` |
+| AAAA | `@`      | `2606:50c0:8001::153` |
+| AAAA | `@`      | `2606:50c0:8002::153` |
+| AAAA | `@`      | `2606:50c0:8003::153` |
+
+> 官方建议即使配置了 IPv6，也保留 `A` 记录，因为 IPv6 普及度仍不均衡。
+
+#### 情况 B：子域名（`www.truss3.com`）
+
+添加 **1 条 `CNAME` 记录**：
+
+| 类型  | 主机记录 | 记录值             |
+| ----- | -------- | ------------------ |
+| CNAME | `www`    | `truss3.github.io` |
+
+> 子域名比根域名更稳定：GitHub 的服务器 IP 变更时无需改动 DNS。推荐把根域名做 301 跳转到 `www`。
+
+#### 同时配置根域名与 `www`
+
+两者都配置好后，GitHub 会自动在它们之间建立跳转。跳转方向取决于你在 Pages 设置里填的 Custom domain 是哪一个。
+
+#### ⚠️ Cloudflare 用户注意
+
+代理状态（橙色云朵）必须设为 **DNS only（灰色云朵）**。开启代理会导致 GitHub 无法签发 HTTPS 证书，站点报 525/526 错误。
+
+### 步骤 4：在 Pages 设置中填写域名
+
+**Settings → Pages → Custom domain** 填入域名并保存。GitHub 会做一次 DNS 检查。
+
+若 DNS 尚未生效，这里会提示失败——不必担心，等 DNS 生效后重新保存即可。工作流中的 `CNAME` 文件也会在每次部署时自动同步该设置。
+
+### 步骤 5：开启 HTTPS
+
+DNS 生效后，**Settings → Pages → Enforce HTTPS** 打勾。
+
+GitHub 会自动申请 Let's Encrypt 证书，通常几分钟内完成，最长可能需要 24 小时。证书签发前 `Enforce HTTPS` 可能是灰色不可选状态，属正常现象。
+
+### 组织域名验证（推荐）
+
+仓库归属 `truss3` 组织，建议做一次域名归属验证，防止域名被其他仓库抢注：
+
+**组织 Settings → Pages → Add a domain** 填入域名，GitHub 会给出一个类似 `_github-pages-challenge-truss3` 的 TXT 记录，在你的 DNS 服务商添加后点击 **Verify** 即可。
+
+### 排查：部署成功了但网站打不开
+
+| 现象                    | 原因与处理                                                              |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `deploy-pages` 步骤报错 | Pages 未开启，回到步骤 1                                                |
+| 打开域名显示 404        | DNS 未生效（`dig truss3.com +short` 检查），或自定义域名未在步骤 4 保存 |
+| 提示证书错误 / 525      | Cloudflare 代理未关闭，或 HTTPS 证书仍在签发中                          |
+| 样式丢失、页面空白      | `BASE_PATH` 与实际部署路径不符，检查 `CUSTOM_DOMAIN` 是否设置正确       |
+| 域名被提示已被占用      | 该域名已被其他 GitHub 账号或仓库绑定，需先在原处释放                    |
+
+DNS 传播通常几分钟到 48 小时不等。修改 DNS 后，用 `dig <域名> +short` 或 `nslookup` 确认解析结果。
 
 ## CI
 

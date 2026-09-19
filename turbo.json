@@ -2,7 +2,7 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "globalDependencies": [".node-version", "pnpm-lock.yaml", "eslint.config.mjs"],
-  "globalEnv": ["NODE_ENV", "SITE_URL"],
+  "globalEnv": ["NODE_ENV", "SITE_URL", "BASE_PATH"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

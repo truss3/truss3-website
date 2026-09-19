@@ -51,8 +51,11 @@ jobs:
       - name: 构建站点
         run: pnpm build
         env:
-          SITE_URL: ${{ steps.pages.outputs.origin }}
-          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # 优先使用显式配置的自定义域名，避免首次部署时 Pages 设置尚未生效
+          # 导致 canonical / sitemap 生成 github.io 或错误的子路径地址。
+          SITE_URL: ${{ vars.CUSTOM_DOMAIN != '' && format('https://{0}', vars.CUSTOM_DOMAIN) || steps.pages.outputs.origin }}
+          # 绑定独立域名后站点位于根路径；未绑定时沿用 Pages 推导出的子路径。
+          BASE_PATH: ${{ vars.CUSTOM_DOMAIN != '' && '/' || steps.pages.outputs.base_path }}
 
       # 显式写入 CNAME，保证自定义域名在每次部署后都被保留
       - name: 写入 CNAME（已绑定自定义域名时）
