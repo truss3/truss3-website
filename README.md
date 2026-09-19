@@ -88,6 +88,16 @@ pnpm --filter @truss3/conversation-web build
 
 Logo 为手写 SVG，见 `src/components/Logo.astro`（页头/页脚）与 `public/favicon.svg`（浏览器图标），两处图形需保持一致。
 
+### ⚠️ 不要删除平台校验文件
+
+`public/` 下形如 `<32位十六进制>.txt` 的文件（如 `13d4c114d6580846b40f664a0781a7db.txt`）是**微信等平台下发的域名归属校验文件**，需通过 `https://www.weweknow.com/<文件名>` 可访问才能通过校验。
+
+维护要求：
+
+- **不可删除、不可改名、不可改动内容**，包括不要添加结尾换行（文件本身无尾换行，改动会导致校验失败）
+- 校验通过后仍需长期保留，平台会定期复查
+- 已确认 Prettier 不会处理 `.txt` 文件，`pnpm format` 也不会破坏它
+
 ## 工程规范
 
 - **格式化**：Prettier 统一管控，配置见 `.prettierrc.json`。提交前请确保 `pnpm format:check` 通过。
