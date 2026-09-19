@@ -18,7 +18,8 @@ export default defineConfig({
   site,
   base,
   output: 'static',
-  trailingSlash: 'ignore',
+  // 统一生成带尾斜杠的规范 URL，避免 sitemap 同时收录 /about 与 /about/ 两个变体
+  trailingSlash: 'always',
 
   integrations: [sitemap()],
 
