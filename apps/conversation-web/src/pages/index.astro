@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const features = [
+  {
+    title: '统一的信息入口',
+    body: '把分散在多个渠道的对话收敛到一处，团队成员不必反复确认上下文。',
+  },
+  {
+    title: '可追溯的决策',
+    body: '每条结论都能回溯到原始讨论，减少"当时为什么这么定"的反复拉扯。',
+  },
+  {
+    title: '面向交付的协作',
+    body: '从讨论直接落到任务与产出，让沟通结果真正进入交付流程。',
+  },
+  {
+    title: '开箱即用的接入',
+    body: '标准协议与开放接口，既有系统无需大改即可接入。',
+  },
+] as const;
+
+const steps = [
+  { step: '01', title: '接入', body: '对接现有渠道与系统，历史数据可选同步。' },
+  { step: '02', title: '沉淀', body: '对话自动结构化，形成可检索的知识资产。' },
+  { step: '03', title: '交付', body: '结论直接转成任务，闭环到实际产出。' },
+] as const;
+---
+
+<Layout title="Truss3" description="Truss3 官方站点：让团队对话沉淀为可复用的知识资产。">
+  <Header />
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <p class="eyebrow">Conversation Platform</p>
+        <h1>
+          让团队对话
+          <br />
+          沉淀为可复用的资产
+        </h1>
+        <p class="hero-lead">
+          Truss3
+          把散落在各个渠道的讨论整理成结构化的知识，让每一次沟通都成为团队可检索、可追溯、可复用的积累。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">
+            预约演示
+          </a>
+          <a class="btn btn-ghost" href="#features">
+            了解能力
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>核心能力</h2>
+          <p>围绕"对话"这一最原始的协作方式，解决信息流失与重复沟通的问题。</p>
+        </header>
+
+        <ul class="grid">
+          {features.map((item) => (
+            <li class="card">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow" class="section section-alt">
+      <div class="container">
+        <header class="section-head">
+          <h2>三步落地</h2>
+          <p>不需要重构现有流程，从接入到产生价值只隔一次配置。</p>
+        </header>
+
+        <ol class="steps">
+          {steps.map((item) => (
+            <li class="step">
+              <span class="step-num" aria-hidden="true">
+                {item.step}
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container narrow">
+        <header class="section-head">
+          <h2>关于我们</h2>
+        </header>
+        <p>
+          Truss3
+          是一支专注协作效率的工程团队。我们相信，团队真正的瓶颈往往不是能力，而是信息在传递过程中的损耗。
+        </p>
+        <p>
+          因此我们把精力放在最基础的问题上：如何让一次对话产生的结论，被完整、准确地保留下来，并在需要的时候立刻找到。
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section section-alt">
+      <div class="container narrow contact">
+        <header class="section-head">
+          <h2>联系我们</h2>
+          <p>无论是产品咨询还是合作意向，我们都会在一个工作日内回复。</p>
+        </header>
+
+        <ul class="contact-list">
+          <li>
+            <span class="contact-label">邮箱</span>
+            <a href="mailto:hello@example.com">hello@example.com</a>
+          </li>
+          <li>
+            <span class="contact-label">商务合作</span>
+            <a href="mailto:bd@example.com">bd@example.com</a>
+          </li>
+        </ul>
+
+        <a class="btn btn-primary" href="mailto:hello@example.com">
+          发送邮件
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

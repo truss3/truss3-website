@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 部署时若需要指定 sitemap 绝对地址，替换下方域名为实际生产域名
+Sitemap: https://example.com/sitemap-index.xml

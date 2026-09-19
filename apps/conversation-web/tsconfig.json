@@ -1,0 +1,17 @@
+{
+  // 继承 astro 最严格预设，已包含 strict / noUnusedLocals / noUnusedParameters /
+  // noImplicitReturns / noImplicitOverride / noFallthroughCasesInSwitch /
+  // noUncheckedIndexedAccess / exactOptionalPropertyTypes 等，此处只声明额外约束。
+  "extends": "astro/tsconfigs/strictest",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    // 强制 import type 语法，避免类型被误编译为运行时导入
+    "verbatimModuleSyntax": true,
+    // 大小写不一致的路径在 macOS 上能跑、在 Linux CI 上会挂，提前拦截
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

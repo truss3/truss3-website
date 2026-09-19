@@ -1,0 +1,6 @@
+# pnpm workspace 拓扑定义
+# apps/*    -> 可独立部署的应用（官网、后台、文档站等）
+# packages/* -> 可被 apps 复用的内部包（未来扩展用，当前为空）
+packages:
+  - apps/*
+  - packages/*

@@ -1,0 +1,33 @@
+# ---- 依赖 ----
+node_modules/
+.pnpm-store/
+
+# ---- 构建产物 ----
+dist/
+.output/
+.astro/
+.turbo/
+*.tsbuildinfo
+
+# ---- 环境变量 ----
+.env
+.env.*
+!.env.example
+
+# ---- 日志 ----
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ---- 测试与缓存 ----
+coverage/
+.eslintcache
+.prettiercache
+
+# ---- 编辑器 / 系统 ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

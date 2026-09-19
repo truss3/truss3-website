@@ -1,0 +1,475 @@
+/* ==========================================================================
+   Truss3 官网全局样式
+   - 单文件、零依赖，纯静态站不需要 CSS 框架
+   - 主题变量集中在 :root，暗色模式通过 prefers-color-scheme 覆盖
+   ========================================================================== */
+
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f6f7f9;
+  --surface: #ffffff;
+  --border: #e4e7ec;
+  --text: #101828;
+  --text-muted: #667085;
+  --brand: #2563eb;
+  --brand-hover: #1d4ed8;
+  --brand-contrast: #ffffff;
+  --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 8px 24px -12px rgb(16 24 40 / 12%);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --container: 1120px;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1120;
+    --bg-alt: #0f1729;
+    --surface: #131c30;
+    --border: #253048;
+    --text: #e8edf7;
+    --text-muted: #97a3b8;
+    --brand: #60a5fa;
+    --brand-hover: #93c5fd;
+    --brand-contrast: #0b1120;
+    --shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 12px 32px -16px rgb(0 0 0 / 60%);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--brand-hover);
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------ 布局 */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.container.narrow {
+  max-width: 760px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px;
+  background: var(--brand);
+  color: var(--brand-contrast);
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ------------------------------------------------------------------ 按钮 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: var(--brand-contrast);
+}
+
+.btn-primary:hover {
+  background: var(--brand-hover);
+  color: var(--brand-contrast);
+}
+
+.btn-ghost {
+  border-color: var(--border);
+  color: var(--text);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+/* ------------------------------------------------------------------ 头部 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 68px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand:hover {
+  color: var(--text);
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--brand);
+  color: var(--brand-contrast);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.site-nav ul {
+  display: flex;
+  gap: 28px;
+}
+
+.site-nav a {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.site-nav a:hover {
+  color: var(--text);
+}
+
+.header-cta {
+  padding: 9px 18px;
+  font-size: 14px;
+}
+
+@media (max-width: 860px) {
+  .site-nav,
+  .header-cta {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ Hero */
+.hero {
+  padding: 96px 0 88px;
+  background:
+    radial-gradient(
+      60% 60% at 50% 0%,
+      color-mix(in srgb, var(--brand) 12%, transparent),
+      transparent 70%
+    ),
+    var(--bg);
+}
+
+.hero-inner {
+  max-width: 780px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: 18px;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+}
+
+.hero-lead {
+  margin-top: 22px;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+/* ------------------------------------------------------------------ 区块 */
+.section {
+  padding: 84px 0;
+}
+
+.section-alt {
+  background: var(--bg-alt);
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 44px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.section-head p {
+  margin-top: 14px;
+  color: var(--text-muted);
+}
+
+.narrow p + p {
+  margin-top: 18px;
+}
+
+.narrow p {
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------ 卡片 */
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  font-size: 1.0625rem;
+}
+
+.card p {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------------ 步骤 */
+.steps {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  counter-reset: none;
+}
+
+.step {
+  padding: 28px;
+  border-left: 3px solid var(--brand);
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+
+.step-num {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--brand);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.step h3 {
+  font-size: 1.0625rem;
+}
+
+.step p {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------------ 联系 */
+.contact-list {
+  display: grid;
+  gap: 12px;
+  margin: 32px 0;
+}
+
+.contact-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.contact-label {
+  min-width: 84px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------------------ 404 */
+.notfound {
+  display: grid;
+  place-content: center;
+  justify-items: start;
+  gap: 16px;
+  min-height: 70vh;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.notfound p {
+  color: var(--text-muted);
+}
+
+/* ------------------------------------------------------------------ 页脚 */
+.site-footer {
+  padding: 56px 0 40px;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.footer-inner {
+  display: grid;
+  gap: 28px;
+}
+
+.footer-brand p {
+  margin-top: 14px;
+  max-width: 320px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.footer-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-nav a {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.footer-nav a:hover {
+  color: var(--text);
+}
+
+.copyright {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+@media (min-width: 860px) {
+  .footer-inner {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+
+  .footer-nav {
+    justify-self: end;
+  }
+
+  .copyright {
+    grid-column: 1 / -1;
+  }
+}
